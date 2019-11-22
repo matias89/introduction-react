@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/matias89/introduction-react/issues"
   },
-  "homepage": "https://github.com/matias89/introduction-react#readme"
+  "homepage": "https://github.com/matias89/introduction-react#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1"
+  }
 }
