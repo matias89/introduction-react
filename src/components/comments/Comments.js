@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { get } from '../../utils/services';
+import { API_URL } from '../../constants';
 
 class Comments extends Component {
     constructor(props) {
@@ -9,19 +11,15 @@ class Comments extends Component {
         }
     }
     handleOnGetComments() {
-        window.fetch('http://jsonplaceholder.typicode.com/comments')
-            .then(response => {
-                response.json()
-                    .then(comments => {
-                        this.setState({
-                            comments
-                        });
-                    })
+        get(`${API_URL}/comments`).then(comments => {
+            this.setState({
+                comments: comments.data // Si quitan axios, quitar '.data'
             });
+        });
     }
-    buildItem(body, email) {
+    buildItem(body, email, key) {
         return (
-            <p>{email}: {body}</p>
+            <p key={key}>{email}: {body}</p>
         );
     }
     render() {
@@ -30,7 +28,8 @@ class Comments extends Component {
             <div>
                 {
                     comments.map(comment => {
-                        return this.buildItem(comment.body, comment.email)
+                        const { body, email, id } = comment;
+                        return this.buildItem(body, email, id)
                     })
                 }
                 <button
