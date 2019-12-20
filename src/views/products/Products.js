@@ -1,24 +1,67 @@
 import React, { Component } from "react";
 import Product from "../../components/products/Product";
 
+import { API_URL } from '../../constants';
+import { get } from '../../utils/services';
+
 class Products extends Component {
   constructor(props) {
     super(props);
-    this.products = 20;
-  }
-  buildProducts() {
-    const p = [];
-    for (let i = 0; i < this.products; i++) {
-      p[i] = (
-        <div className="col-4">
-          <Product />
-        </div>
-      );
+    this.buildProducts = this.buildProducts.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.state = {
+      posts: [], 
     }
-    return p;
+  }
+  componentDidMount() {
+    get(`${API_URL}/posts`)
+      .then(posts => {
+        this.setState({
+          posts: posts.data,
+          inputValue: ''
+        })
+      })
+  }
+
+  handleOnSubmit() {
+    console.log(this.state.inputValue);
+  }
+
+  handleOnChange(e) {
+    this.setState({
+      inputValue: e.target.value
+    });
+  }
+
+  buildProducts() {
+    return this.state.posts.map(post => {
+      const { id, userId, title, body } = post;
+      return (
+        <div key={id} className="col-4">
+          <Product
+            id={id}
+            userId={userId}
+            title={title}
+            body={body}
+            onChange={this.handleOnChange}
+          />
+        </div>
+      )
+    })
   }
   render() {
-    return <div className="row">{this.buildProducts()}</div>;
+    return (
+      <div className="container">
+        <button
+          type="button"
+          className="btn btn-success"
+          onClick={this.handleOnSubmit}>Submit</button>
+        <div className="row">
+          {this.buildProducts()}
+        </div>
+      </div>
+    );
   }
 }
 
