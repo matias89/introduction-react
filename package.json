@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url ./"
+    "build": "parcel build ./src/index.html --public-url ./",
+    "server": "json-server --watch db.json"
   },
   "repository": {
     "type": "git",
@@ -29,8 +30,9 @@
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
     "@babel/core": "^7.7.4",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "json-server": "^0.15.1",
+    "parcel-bundler": "^1.12.4"
   }
 }

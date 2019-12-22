@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Product from "../../components/products/Product";
 
-import { API_URL } from '../../constants';
-import { get } from '../../utils/services';
+import { API_URL } from "../../constants";
+import { get, post } from "../../utils/services";
 
 class Products extends Component {
   constructor(props) {
@@ -11,17 +11,22 @@ class Products extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.state = {
-      posts: [], 
-    }
+      posts: []
+    };
   }
   componentDidMount() {
-    get(`${API_URL}/posts`)
-      .then(posts => {
-        this.setState({
-          posts: posts.data,
-          inputValue: ''
-        })
-      })
+    get(`${API_URL}/posts`).then(posts => {
+      this.setState({
+        posts,
+        inputValue: ""
+      });
+    });
+    post(`${API_URL}/posts`, {
+      userId: 1,
+      id: 1010,
+      title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+      body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+    }).then(response => console.log(">>> R", response));
   }
 
   handleOnSubmit() {
@@ -39,27 +44,18 @@ class Products extends Component {
       const { id, userId, title, body } = post;
       return (
         <div key={id} className="col-4">
-          <Product
-            id={id}
-            userId={userId}
-            title={title}
-            body={body}
-            onChange={this.handleOnChange}
-          />
+          <Product id={id} userId={userId} title={title} body={body} onChange={this.handleOnChange} />
         </div>
-      )
-    })
+      );
+    });
   }
   render() {
     return (
       <div className="container">
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={this.handleOnSubmit}>Submit</button>
-        <div className="row">
-          {this.buildProducts()}
-        </div>
+        <button type="button" className="btn btn-success" onClick={this.handleOnSubmit}>
+          Submit
+        </button>
+        <div className="row">{this.buildProducts()}</div>
       </div>
     );
   }
