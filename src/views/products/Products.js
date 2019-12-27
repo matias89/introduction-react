@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Product from "../../components/products/Product";
 
 import { API_URL } from "../../constants";
-import { get, post } from "../../utils/services";
+import { get, post, _get, test } from "../../utils/services";
 
 class Products extends Component {
   constructor(props) {
@@ -21,12 +21,10 @@ class Products extends Component {
         inputValue: ""
       });
     });
-    post(`${API_URL}/posts`, {
-      userId: 1,
-      id: 1010,
-      title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-      body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-    }).then(response => console.log(">>> R", response));
+    const t = test(`${API_URL}/posts`, `${API_URL}/posts`, `${API_URL}/posts`);
+    t.then(r => {
+      console.log('>>> R', r);
+    });
   }
 
   handleOnSubmit() {
