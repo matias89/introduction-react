@@ -3,4 +3,5 @@
 
 ### Instalación
 - `npm install`
-- `npm start`
+- `npm start // Terminal 1`
+- `npm run server // Terminal 2`
